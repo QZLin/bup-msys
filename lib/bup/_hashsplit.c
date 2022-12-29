@@ -348,7 +348,7 @@ static PyObject *HashSplitter_iter(PyObject *self)
     return self;
 }
 
-static int bup_py_fadvise(int fd, off_t offset, off_t len, int advice)
+__attribute__((unused)) static int bup_py_fadvise(int fd, off_t offset, off_t len, int advice)
 {
     const int rc = posix_fadvise(fd, offset, len, advice);
     switch (rc) {
