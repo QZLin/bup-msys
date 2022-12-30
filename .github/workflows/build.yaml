@@ -38,15 +38,12 @@ jobs:
             rsync
       - name: Detect git
         run: |-
-          (Get-Item (Get-Command git).Source).Directory.FullName > GIT_PATH
-      # - run: |-
-      #     where.exe msys2
-      #     msys2 --version
-      #     msys2_shell.cmd -defterm -no-start -c 'pacman -Qs'
+          $GIT_PATH = (Get-Item (Get-Command git).Source).Directory.FullName
+          echo "{GIT_PATH}={$GIT_PATH}" >> $GITHUB_ENV
 
       - uses: actions/checkout@v3
       - shell: msys2 {0}
         run: |-
-          export PATH=$PATH:$(cat ../GIT_PATH)
+          export PATH=$PATH:${{ env.GIT_PATH }}
           ./configure
           make
