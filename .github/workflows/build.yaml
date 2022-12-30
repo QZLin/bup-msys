@@ -44,7 +44,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: build bup
         shell: msys2 {0}
+        env:
+          GIT_PATH: ${{ env.GIT_PATH }}
         run: |-
-          export PATH=$PATH:${{ env.GIT_PATH }}
+          export PATH=$PATH:$GIT_PATH
           ./configure
           make
