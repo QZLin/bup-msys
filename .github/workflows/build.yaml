@@ -41,6 +41,9 @@ jobs:
         run: |-
           $GIT_PATH = (Get-Item (Get-Command git).Source).Directory.FullName
           echo "GIT_PATH=$GIT_PATH" >> $ENV:GITHUB_ENV
+      - name: Detect msys
+        run: |-
+          ls (Get-Item (Get-Command msys2).Source).Directory.FullName
 
       - uses: actions/checkout@v3
       - name: build bup
@@ -50,7 +53,8 @@ jobs:
         run: |-
           GIT_PATH=$(cd "$GIT_PATH"; pwd)
           export PATH="$PATH:$GIT_PATH"
-          git --version
+
+          cp /usr/bin/msys-intl-8.dll /usr/lib/libintl.a
 
           ./configure
           make
