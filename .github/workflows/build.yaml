@@ -47,6 +47,7 @@ jobs:
         env:
           GIT_PATH: ${{ env.GIT_PATH }}
         run: |-
-          export PATH=$PATH:$GIT_PATH
+          export PATH="$PATH:$GIT_PATH"
+          git --version
           ./configure
           make
