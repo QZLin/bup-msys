@@ -16,7 +16,7 @@ permissions:
 # Controls when the workflow will run
 on:
   push:
-    branches: [main]
+    branches: [msys]
   pull_request:
     branches: [main]
 
