@@ -37,11 +37,12 @@ jobs:
             make
             rsync
 
-      - run: -|
-          where.exe msys2
-          msys2 --version
-          msys2_shell.cmd -defterm -no-start -c 'pacman -Qs'
+      # - run: |-
+      #     where.exe msys2
+      #     msys2 --version
+      #     msys2_shell.cmd -defterm -no-start -c 'pacman -Qs'
 
       - uses: actions/checkout@v3
-      - run: -|
+      - shell: msys2 {0}
+        run: |-
           make
