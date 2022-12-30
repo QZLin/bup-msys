@@ -70,9 +70,15 @@ jobs:
 
           ./configure
           make
+      - name: generate dependencies
+        run: |-
+          pacman -Qs python | grep -Po "(?<=local/).*" >> dependencies.txt
+          pacman -Qs libintl | grep -Po "(?<=local/).*" >> dependencies.txt
+          pacman -Qs libiconv | grep -Po "(?<=local/).*" >> dependencies.txt
+
 
       - name: Pack and upload
         uses: actions/upload-artifact@v3
         with:
           name: msys_with_bup
-          path: ${{ runner.temp }}/msys64 # or path/to/artifact
+          path: . # or path/to/artifact
