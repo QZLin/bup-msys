@@ -1,0 +1,52 @@
+name: Build
+permissions:
+  # actions: read|write|none
+  # checks: read|write|none
+  contents: write
+  # deployments: read|write|none
+  # id-token: read|write|none
+  issues: write
+  # discussions: read|write|none
+  # packages: read|write|none
+  # pages: read|write|none
+  # pull-requests: read|write|none
+  # repository-projects: read|write|none
+  # security-events: read|write|none
+  # statuses: read|write|none
+# Controls when the workflow will run
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+jobs:
+  msys_env:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: msys2/setup-msys2@v2
+        with:
+          install: >-
+            gcc
+            python3
+            make
+            rsync
+
+      - run: -|
+          where.exe msys2
+          msys2 --version
+          msys2_shell.cmd -defterm -no-start -c 'pacman -Qs'
+  build_bup:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v3
+      - run: -|
+          make
