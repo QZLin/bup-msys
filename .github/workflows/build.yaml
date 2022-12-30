@@ -30,7 +30,6 @@ jobs:
         shell: pwsh
     steps:
       - uses: actions/cache/restore@v3
-        id: cache-msys
         with:
           path: ${{ runner.temp }}/msys64
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
@@ -44,7 +43,6 @@ jobs:
             rsync
             libintl
       - uses: actions/cache/save@v3
-        id: cache-msys
         with:
           path: ${{ runner.temp }}/msys64
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
