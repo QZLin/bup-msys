@@ -43,6 +43,8 @@ jobs:
           echo "GIT_PATH=$GIT_PATH" >> $ENV:GITHUB_ENV
       - name: Detect msys
         run: |-
+          ls ${{ runner.temp }}
+          ls (Get-Item (Get-Command msys2).Source).Directory.Parent
           ls (Get-Item (Get-Command msys2).Source).Directory.FullName
 
       - uses: actions/checkout@v3
@@ -58,3 +60,5 @@ jobs:
 
           ./configure
           make
+
+      # - name: Pack and upload
