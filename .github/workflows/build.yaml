@@ -41,12 +41,7 @@ jobs:
           where.exe msys2
           msys2 --version
           msys2_shell.cmd -defterm -no-start -c 'pacman -Qs'
-  build_bup:
-    runs-on: windows-latest
-    defaults:
-      run:
-        shell: msys2 {0}
-    steps:
+
       - uses: actions/checkout@v3
       - run: -|
           make
