@@ -36,6 +36,7 @@ jobs:
             python3
             make
             rsync
+            libintl
       - name: Detect git
         run: |-
           $GIT_PATH = (Get-Item (Get-Command git).Source).Directory.FullName
