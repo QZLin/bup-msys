@@ -32,7 +32,7 @@ jobs:
       - uses: actions/cache/restore@v3
         with:
           path: ${{ runner.temp }}/msys64
-          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+          key: ${{ runner.os }}-msys
       - uses: msys2/setup-msys2@v2
         if: steps.cache.outputs.cache-hit != 'true'
         with:
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/cache/save@v3
         with:
           path: ${{ runner.temp }}/msys64
-          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+          key: ${{ runner.os }}-msys
 
       - name: Detect git
         run: |-
@@ -53,7 +53,7 @@ jobs:
           echo "GIT_PATH=$GIT_PATH" >> $ENV:GITHUB_ENV
       - name: Detect msys
         run: |-
-          $MSYS_HOME = ${{ runner.temp }}\msys64
+          $MSYS_HOME = "${{ runner.temp }}\msys64"
           ls $MSYS_HOME
           echo "MSYS_HOME=$MSYS_HOME" >> $ENV:GITHUB_ENV
 
