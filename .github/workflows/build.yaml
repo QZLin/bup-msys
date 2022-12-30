@@ -29,7 +29,13 @@ jobs:
       run:
         shell: pwsh
     steps:
+      - uses: actions/cache/restore@v3
+        id: cache-msys
+        with:
+          path: ${{ runner.temp }}/msys64
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       - uses: msys2/setup-msys2@v2
+        if: steps.cache.outputs.cache-hit != 'true'
         with:
           install: >-
             gcc
@@ -37,15 +43,21 @@ jobs:
             make
             rsync
             libintl
+      - uses: actions/cache/save@v3
+        id: cache-msys
+        with:
+          path: ${{ runner.temp }}/msys64
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
       - name: Detect git
         run: |-
           $GIT_PATH = (Get-Item (Get-Command git).Source).Directory.FullName
           echo "GIT_PATH=$GIT_PATH" >> $ENV:GITHUB_ENV
       - name: Detect msys
         run: |-
-          ls ${{ runner.temp }}
-          ls (Get-Item (Get-Command msys2).Source).Directory.Parent
-          ls (Get-Item (Get-Command msys2).Source).Directory.FullName
+          $MSYS_HOME = ${{ runner.temp }}\msys64
+          ls $MSYS_HOME
+          echo "MSYS_HOME=$MSYS_HOME" >> $ENV:GITHUB_ENV
 
       - uses: actions/checkout@v3
       - name: build bup
@@ -61,4 +73,8 @@ jobs:
           ./configure
           make
 
-      # - name: Pack and upload
+      - name: Pack and upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: msys_with_bup
+          path: ${{ runner.temp }}/msys64 # or path/to/artifact
