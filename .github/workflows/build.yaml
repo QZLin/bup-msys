@@ -1,4 +1,5 @@
 name: Build
+<<<<<<< HEAD
 permissions: write-all
 on:
   push:
@@ -10,6 +11,34 @@ on:
 jobs:
   msys_env:
     runs-on: windows-2019
+=======
+permissions:
+  # actions: read|write|none
+  # checks: read|write|none
+  contents: write
+  # deployments: read|write|none
+  # id-token: read|write|none
+  issues: write
+  # discussions: read|write|none
+  # packages: read|write|none
+  # pages: read|write|none
+  # pull-requests: read|write|none
+  # repository-projects: read|write|none
+  # security-events: read|write|none
+  # statuses: read|write|none
+# Controls when the workflow will run
+on:
+  push:
+    branches: [msys]
+  pull_request:
+    branches: [main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+jobs:
+  msys_env:
+    runs-on: windows-latest
+>>>>>>> f6822be (github actions test)
     defaults:
       run:
         shell: pwsh
@@ -26,7 +55,11 @@ jobs:
             python3
             make
             rsync
+<<<<<<< HEAD
             libintl
+=======
+            gettext-devel
+>>>>>>> f6822be (github actions test)
       - uses: actions/cache/save@v3
         with:
           path: ${{ runner.temp }}/msys64
@@ -51,15 +84,22 @@ jobs:
           GIT_PATH=$(cd "$GIT_PATH"; pwd)
           export PATH="$PATH:$GIT_PATH"
 
+<<<<<<< HEAD
           cp /usr/bin/msys-intl-8.dll /usr/lib/libintl.a
 
+=======
+>>>>>>> f6822be (github actions test)
           ./configure
           make
       - name: generate dependencies
         shell: msys2 {0}
         run: |-
           pacman -Qs python | grep -Po "(?<=local/).*" >> dependencies.txt
+<<<<<<< HEAD
           pacman -Qs libintl | grep -Po "(?<=local/).*" >> dependencies.txt
+=======
+          pacman -Qs gettext-devel | grep -Po "(?<=local/).*" >> dependencies.txt
+>>>>>>> f6822be (github actions test)
           pacman -Qs libiconv | grep -Po "(?<=local/).*" >> dependencies.txt
 
 
