@@ -1,28 +1,15 @@
 name: Build
-permissions:
-  # actions: read|write|none
-  # checks: read|write|none
-  contents: write
-  # deployments: read|write|none
-  # id-token: read|write|none
-  issues: write
-  # discussions: read|write|none
-  # packages: read|write|none
-  # pages: read|write|none
-  # pull-requests: read|write|none
-  # repository-projects: read|write|none
-  # security-events: read|write|none
-  # statuses: read|write|none
-# Controls when the workflow will run
+permissions: write-all
 on:
   push:
-    branches: [main,msys]
+    branches:
+      - main
+      - msys
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 jobs:
   msys_env:
-    runs-on: windows-latest
+    runs-on: windows-2019
     defaults:
       run:
         shell: pwsh
