@@ -17,13 +17,13 @@ if ! test -f lib/bup/bupsplit.c; then
     exit 1
 fi
 
-git_top=$(git rev-parse --show-toplevel) || true
-if test "$git_top" != "$top"; then
-    # Not a checkout, or perhaps we're building from an archive dir
-    # unpacked somewhere in the source tree.
-    rm -f "$dest"
-    exit 0
-fi
+# git_top=$(git rev-parse --show-toplevel) || true
+# if test "$git_top" != "$top"; then
+#     # Not a checkout, or perhaps we're building from an archive dir
+#     # unpacked somewhere in the source tree.
+#     rm -f "$dest"
+#     exit 0
+# fi
 
 local_changes=$(git status --porcelain -uno)
 
