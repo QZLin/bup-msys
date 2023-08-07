@@ -100,8 +100,7 @@ all: dev/bup-exec dev/bup-python dev/python $(bup_deps) Documentation/all \
   $(current_sampledata)
 
 $(current_sampledata):
-# disable for msys\
-  dev/configure-sampledata --setup
+	dev/configure-sampledata --setup
 
 PANDOC ?= $(shell type -p pandoc)
 

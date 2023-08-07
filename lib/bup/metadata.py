@@ -526,7 +526,6 @@ class Metadata:
     # The numeric/text distinction only matters when reading/restoring
     # a stored record.
     def _add_posix1e_acl(self, path, st):
-        return
         if not read_acl:
             return
         if not stat.S_ISLNK(st.st_mode):
